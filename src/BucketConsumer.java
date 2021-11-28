@@ -27,7 +27,13 @@ public class BucketConsumer<T> extends Thread {
                     balance += (t - lastUpdateTime) * rate / 1e+9;
                     lastUpdateTime = t;
                 }
-                consumer.accept(queue.take());
+                T e = queue.poll();
+                while (e == null) {
+                    sleep((long) (1000 / rate));
+                    e = queue.poll();
+                    lastUpdateTime = System.nanoTime();
+                }
+                consumer.accept(e);
                 balance -= 1;
             }
         } catch (InterruptedException ignore) {

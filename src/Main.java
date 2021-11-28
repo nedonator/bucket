@@ -12,10 +12,15 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Bucket<Integer> bucket = new Bucket<>(10, 2, x-> System.out.println(out(x)));
         int e = 0;
-        Object o = new Object();
-        while(true){
+        for(int j = 0; j < 3000; j++){
             sleep(10);
             bucket.put(e++);
         }
+        sleep(10000);
+        for(int j = 0; j < 20; j++){
+            sleep(10);
+            bucket.put(e++);
+        }
+        sleep(10000);
     }
 }
